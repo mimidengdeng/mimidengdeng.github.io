@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>REDIS | Hexo</title>
+  <title>Redis01 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="REDIS 键-值存储器">
+  <meta name="description" content="REDIS 简介">
 <meta property="og:type" content="article">
-<meta property="og:title" content="REDIS">
-<meta property="og:url" content="http://example.com/2024/05/19/REDIS/index.html">
+<meta property="og:title" content="Redis01">
+<meta property="og:url" content="http://example.com/2024/05/20/Redis01/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="REDIS 键-值存储器">
+<meta property="og:description" content="REDIS 简介">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-05-19T13:14:37.000Z">
-<meta property="article:modified_time" content="2024-05-20T06:01:49.546Z">
+<meta property="article:published_time" content="2024-05-20T06:59:23.000Z">
+<meta property="article:modified_time" content="2024-05-21T05:00:27.794Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
@@ -155,98 +155,84 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-REDIS" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Redis01" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      REDIS
+      Redis01
     </h1>
   
 
         
-        <a href="/2024/05/19/REDIS/" class="archive-article-date">
-  	<time datetime="2024-05-19T13:14:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-19</time>
+        <a href="/2024/05/20/Redis01/" class="archive-article-date">
+  	<time datetime="2024-05-20T06:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>REDIS 键-值存储器</code></p>
+        <p><code>REDIS 简介</code></p>
 <span id="more"></span>
 
-<h1 id="常用用法"><a href="#常用用法" class="headerlink" title="常用用法"></a>常用用法</h1><ul>
-<li>HELP</li>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li>早期互联网公司的应用系统，主要通过<code>MYSQL</code>的传统数据库，随着互联网的发展,应用系统的访问量增大，数据库的访问性能瓶颈明显，<code>主要是磁盘IO导致</code>  </li>
+<li>内存适合存储需要快速访问的数据，而磁盘适合存储大容量的数据以及需要永久保存的数据。</li>
+<li>上一篇章介绍了五种基本的数据类型：<code>字符串</code>，<code>列表</code>、<code>集合</code>、<code>有序集合</code>、<code>哈希</code></li>
+<li>这里还有五种高级数据类型：<code>消息队列</code>、<code>地理位置</code>、<code>HyperLogLog</code>、<code>位图Bitmap</code>、<code>位域Bitfield</code></li>
 </ul>
-<h2 id="1-基本设置，键的设置删除修改"><a href="#1-基本设置，键的设置删除修改" class="headerlink" title="1 基本设置，键的设置删除修改"></a>1 基本设置，键的设置删除修改</h2><ul>
-<li><code>SET</code>、<code>GET</code>：<code>SET server:name &quot;fido&quot; </code>  <code>GET server:name =&gt; &quot;fido”</code></li>
-<li><code>EXIST</code>:  <code>EXISTS server:name =&gt; 1</code>   <code>EXISTS server:blabla =&gt; 0</code></li>
-<li><code>INCR(增加1)、DEL(删除)</code>: <code>SET connections 10</code> <code>INCR connections =&gt; 11</code> <code>INCR connections =&gt; 12</code> <code>DEL connections</code> <code>INCR connections =&gt; 1</code></li>
-<li><code>INCRBY 、DECRBY（增减指定值）</code>:  <code>INCRBY connections 100</code> <code> DECR connections =&gt; 100</code> <code>DECRBY connections 10 =&gt; 90</code></li>
-<li><code>原子操作</code>：上述操作是原子操作，可以防止并发带来的问题。</li>
+<h1 id="redis的使用"><a href="#redis的使用" class="headerlink" title="redis的使用"></a>redis的使用</h1><ul>
+<li>CLI（Command Line Interface）： Redis-CLI命令行工具</li>
+<li>API （application programming interface）：应用程序接口（JAVA、python）</li>
+<li>GUI （Graphical User interface） ： redisinsight</li>
 </ul>
-<h2 id="2-键的存活时间"><a href="#2-键的存活时间" class="headerlink" title="2 键的存活时间"></a>2 键的存活时间</h2><ul>
-<li><code>EXPIRE TTL</code>或者<code>PEXPIRE PTTL</code></li>
-<li><code>SET resource:lock &quot;Redis Demo 1”</code>, <code>EXPIRE resource:lock 120</code>: 还剩120s存活时间</li>
-<li><code>TTL resource:lock =&gt; 113</code>：还剩113存活时间</li>
-<li><code>TTL resource:lock =&gt; -2 </code>： -2代表过期，-1代表永久存在</li>
-<li><code>PERSIST resource:lock</code>: 键还存在时候，使用PERSIST可以使键变为永久</li>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="1-消息队列"><a href="#1-消息队列" class="headerlink" title="1.消息队列"></a>1.消息队列</h2><ul>
+<li>添加消息 <code>XADD</code> key_name(自定义) value(值-&gt;多个)</li>
+<li>数据长度 <code>XLEN</code> key_name</li>
+<li>消息遍历<code>XRANGE</code> key_name integer</li>
+<li>删除消息 <code>XTRIM</code> key_name index(开始删除的位置)</li>
+<li>添加消息可以指定XADD key_name<code> 1-0</code>（时间戳和序列号） value</li>
+<li>读取消息(一次读取两个消息,从0的位置开始读区，读取失败阻塞1000ms) XREAD COUNT 2 BLOCK 1000 STREAM key_name 0 将0换成$,读取最新的消息</li>
+<li>创建消费者组 <code>XGROUP CREATE key_name group_name index</code></li>
+<li>读取消费者组的消息 <code>XINFO GROUPS key_name</code></li>
+<li>消费者组里添加消费者 <code>XGROUP CREATECONSUMER key-name group-name consumer-name</code></li>
+<li>消费者组的消息读取 <code>XREADGROUP GROUP group-name consumer-name COUNT 2 BLOCK 3000 STREAMS key-name &gt;</code> &gt;代表读取最新的消息</li>
 </ul>
-<h2 id="3-列表"><a href="#3-列表" class="headerlink" title="3 列表"></a>3 列表</h2><ul>
-<li>RPUSH、LPUSH、LLEN、LRANGE、LPOP、RPOP</li>
-<li><code>RPUSH friends &quot;Alice”</code>、<code>RPUSH friends &quot;Bob”</code>: 列表末尾添加元素</li>
-<li><code>LPUSH friends &quot;Sam&quot;·</code> : 列表开头添加元素</li>
-<li><code> LRANGE friends 0 -1 =&gt; 1) &quot;Sam&quot;, 2) &quot;Alice&quot;, 3) &quot;Bob”</code>: 遍历列表所有的元素<code>0</code>  <code>-1</code> 为元素首位和尾部参数</li>
-<li>删除第一个\最后一个元素：  <code>LPOP friends =&gt; &quot;Sam&quot;</code> <code>RPOP friends =&gt; &quot;Bob&quot;</code></li>
-<li>列表长度： <code>LLEN friends</code></li>
+<h2 id="2-地理位置-Geospatial"><a href="#2-地理位置-Geospatial" class="headerlink" title="2 地理位置 Geospatial"></a>2 地理位置 Geospatial</h2><ul>
+<li>添加地理位置信息 <code>GEOADD</code> key-name 经度 纬度 member (可同时添加多个)</li>
+<li>查看某个key里面member 的地理位置 <code>GEOPOS key member</code></li>
+<li>两个位置的距离 <code>GEODIST key member1 member2 (可选单位KM)</code> </li>
+<li><code>GEOSEARCH</code> key <code>FROMMEMBER</code> member-name<code> BYRADIUS</code> distance 查找key里面的成员有多少在distance距离里面</li>
 </ul>
-<h2 id="4-集合"><a href="#4-集合" class="headerlink" title="4 集合"></a>4 集合</h2><ul>
-<li><p><code>SADD</code>添加集合元素  </p>
-</li>
-<li><p><code>SADD superpowers &quot;flight&quot;</code>     <code>SADD superpowers &quot;x-ray vision&quot; &quot;reflexes&quot;</code> 添加的元素已经在集合内会返回0</p>
-</li>
-<li><p><code>SREM</code>删除集合元素</p>
-</li>
-<li><p><code>SREM superpowers &quot;reflexes&quot; =&gt; 1</code>  <code>SREM superpowers &quot;making pizza&quot; =&gt; 0</code></p>
-</li>
-<li><p><code>SISMEMBER</code>元素是否存在</p>
-</li>
-<li><p><code>SISMEMBER superpowers &quot;flight&quot; =&gt; 1</code> <code>SISMEMBER superpowers &quot;reflexes&quot; =&gt; 0</code></p>
-</li>
-<li><p><code>SMEMBERS</code>遍历集合</p>
-</li>
-<li><p><code>SMEMBERS superpowers</code></p>
-</li>
-<li><p><code>SUNION</code>集合的合并</p>
-</li>
-<li><p><code>SADD birdpowers &quot;pecking&quot; SADD birdpowers &quot;flight&quot;</code><br><code>SUNION superpowers birdpowers =&gt; 1) &quot;pecking&quot;, 2) &quot;x-ray vision&quot;, 3) &quot;flight&quot;</code></p>
-</li>
-<li><p><code>SPOP</code>集合的元素弹出: 集合不是有序的数据结构，返回的元素是随机的，这里是<code>c,a</code>，也可能是其他的元素，<code>d,a</code>等等</p>
-</li>
-<li><p><code>SADD letters a b c d e f =&gt; 6</code> 、<code> SPOP letters 2 =&gt; 1) &quot;c&quot; 2) &quot;a&quot;</code></p>
-</li>
+<h2 id="3-HyperLogLog"><a href="#3-HyperLogLog" class="headerlink" title="3 HyperLogLog"></a>3 HyperLogLog</h2><ul>
+<li>PFADD key-name value1 value2</li>
+<li>PFCOUNT key-name</li>
+<li>PFMERGE key1 key2合并</li>
 </ul>
-<h2 id="5-排序集"><a href="#5-排序集" class="headerlink" title="5 排序集"></a>5 排序集</h2><ul>
-<li>添加元素<code>ZADD</code></li>
-<li><code>ZADD hackers 1940 &quot;Alan Kay”</code>、<br> <code>ZADD hackers 1906 &quot;Grace Hopper”</code>、<br><code>ZADD hackers 1953 &quot;Richard Stallman”</code>、<br><code>ZADD hackers 1965 &quot;Yukihiro Matsumoto”</code>、<br><code>ZADD hackers 1916 &quot;Claude Shannon”</code>、<br><code> ZADD hackers 1969 &quot;Linus Torvalds”</code>、<br><code>ZADD hackers 1957 &quot;Sophie Wilson”</code>、<br><code>ZADD hackers 1912 &quot;Alan Turing&quot;</code></li>
-<li>遍历排序集<code>ZRANGE</code></li>
-<li><code>ZRANGE hackers 2 4</code></li>
+<h2 id="4-位图Bitmap（限0-、1）"><a href="#4-位图Bitmap（限0-、1）" class="headerlink" title="4 位图Bitmap（限0 、1）"></a>4 位图Bitmap（限0 、1）</h2><ul>
+<li><code>SETBIT</code> dianzan 0 1（位置为0设置为1）SETBIT dianzan 1 0（位置为1 设置为0）</li>
+<li><code>GETBIT</code> key-name(dianzan) index(pos) 获取key某个位置的的值</li>
+<li>本质是string也可以用SET命令直接设置<code> SET key（dianzan）”\xff”</code>设置8位为1</li>
+<li>BITCOUNT key 计算为1的位置数量</li>
+<li>BITPOS key value 第一次出现value的位置</li>
 </ul>
-<h2 id="6-哈希"><a href="#6-哈希" class="headerlink" title="6 哈希"></a>6 哈希</h2><ul>
-<li>哈希是字符串字段和字符串值之间的映射</li>
-<li><code>HSET</code>(哈希设置)</li>
-<li><code>HSET 用户：1000 名称“John Smith”</code> 、<br> <code>HSET 用户：1000 电子邮件“john.smith@example.com” </code>、<br> <code>HSET 用户：1000 密码“s3cret”</code></li>
-<li>HGETALL(取回保存的所有数据)</li>
-<li><code>HGETALL user:1000 </code></li>
-<li><code>HMSET</code> 多个字符串字段设置</li>
-<li><code>HMSET user:1001 name &quot;Mary Jones&quot; password &quot;hidden&quot; email &quot;mjones@example.com&quot;</code></li>
-<li><code>HGET</code>获得单字符串字段的值</li>
-<li><code>HGET user:1001 name =&gt; &quot;Mary Jones&quot;</code></li>
+<h2 id="5-位域Bitfield"><a href="#5-位域Bitfield" class="headerlink" title="5 位域Bitfield"></a>5 位域Bitfield</h2><ul>
+<li><code>BITFIELD player:1 set u8 #0 1</code>: <code>#0</code>表示第一个位置 u8表示无符号整数，<code>1</code>设置为1级</li>
+<li><code>BITFIELD player:1 incrby  u32 #1 100</code></li>
 </ul>
-
+<h2 id="6-事务"><a href="#6-事务" class="headerlink" title="6 事务"></a>6 事务</h2><ul>
+<li>不同于关系型数据库（eg：Oracle）的原子操作，要么全部成功，要么全部失败</li>
+<li>redis不保证事务的全部执行成功</li>
+<li>MULTI开始一个事务，命令放到一个缓存队列中缓存起来，收到EXEC&#x2F;DISCARD命令事物开始执行，一个命令失败其他命令依然执行</li>
+</ul>
+<h2 id="7-持久化"><a href="#7-持久化" class="headerlink" title="7 持久化"></a>7 持久化</h2><ul>
+<li>RDB（Redis DATABASE）</li>
+<li>AOS （APPEND ONLY FILE）</li>
+</ul>
+<h2 id="8-主从复制"><a href="#8-主从复制" class="headerlink" title="8 主从复制"></a>8 主从复制</h2><h2 id="9-哨兵模式"><a href="#9-哨兵模式" class="headerlink" title="9 哨兵模式"></a>9 哨兵模式</h2>
       
 
       
@@ -336,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/05/19/REDIS/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/05/20/Redis01/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -350,18 +336,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2024/05/20/Redis01/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Redis01
-        
-      </div>
-    </a>
   
-  
-    <a href="/2024/05/18/leecode%E9%9A%8F%E8%AE%B005/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">leecode随记05</div>
+    <a href="/2024/05/19/REDIS/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">REDIS</div>
       <i class="icon-circle-right"></i>
     </a>
   
