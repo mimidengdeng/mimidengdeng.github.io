@@ -152,6 +152,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leecode随记06" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/24/leecode%E9%9A%8F%E8%AE%B006/">leecode随记06</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/24/leecode%E9%9A%8F%E8%AE%B006/" class="archive-article-date">
+  	<time datetime="2024-05-24T08:42:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-差分数组"><a href="#1-差分数组" class="headerlink" title="1 差分数组"></a>1 差分数组</h1><ul>
+<li>同时增加某一个区间内的所有值的时候，可以使用一种思想：将数组里面存储diff[i]-diff[i-1]的值，这样相同的区间内增减相同的值就可以仅仅修改区间内的两个值，例如区间diff[i,j]全加上2，那么将diff[i]加上2，将[j+1]减去2，代表整个区间都加上了2</li>
+<li>已经遇见过两次了，大大减少了计算量，一次是移动连续的k个元素到同一个水平线上，仅需要将第j个元素移动s次，第k+j个元素再次减去s。</li>
+<li>另一次是<code>最少操作使得数组互补</code>，最终和设置为x，对于第i个前后和，可以得出三个区间，和为这个区间内，移动2次，另一个区间的移动一次,某一个移动0次</li>
+</ul>
+<h2 id="具体的做法"><a href="#具体的做法" class="headerlink" title="具体的做法"></a>具体的做法</h2><p> <em>使用差分数组简化计算</em></p>
+<ul>
+<li><p>先将 [2, 2 * limit] 的范围需要的操作数 + 2；</p>
+</li>
+<li><p>之后，将 [1 + min(A, B), limit + max(A, B)] 的范围需要的操作数 - 1（即 2 - 1 &#x3D; 1，操作 1 次）；</p>
+</li>
+<li><p>之后，将 [A + B] 位置的值再 -1（即 1 - 1 &#x3D; 0，操作 0 次）。</p>
+</li>
+</ul>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><h4 id="1使数组互补的最少操作次数"><a href="#1使数组互补的最少操作次数" class="headerlink" title="1使数组互补的最少操作次数"></a>1使数组互补的最少操作次数</h4><p>给你一个长度为 偶数 n 的整数数组 nums 和一个整数 limit 。每一次操作，你可以将 nums 中的任何整数替换为 1 到 limit 之间的另一个整数。<br>如果对于所有下标 i（下标从 0 开始），nums[i] + nums[n - 1 - i] 都等于同一个数，则数组 nums 是 互补的 。例如，数组 [1,2,3,4] 是互补的，因为对于所有下标 i ，nums[i] + nums[n - 1 - i] &#x3D; 5 。<br>返回使数组 互补 的 最少 操作次数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minMoves</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> limit)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 差分数组, diff[0...x] 的和表示最终互补的数字和为 x，需要的操作数</span></span><br><span class="line">        <span class="comment">// 因为差分数组的计算需要更新 r + 1，所以数组的总大小在 limit * 2 + 1 的基础上再 + 1</span></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">diff</span><span class="params">(limit * <span class="number">2</span> + <span class="number">2</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n / <span class="number">2</span>; i ++)&#123;</span><br><span class="line">            <span class="type">int</span> A = nums[i], B = nums[n - <span class="number">1</span> - i];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// [2, 2 * limit] 范围 + 2</span></span><br><span class="line">            <span class="type">int</span> l = <span class="number">2</span>, r = <span class="number">2</span> * limit;</span><br><span class="line">            diff[l] += <span class="number">2</span>, diff[r + <span class="number">1</span>] -= <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// [1 + min(A, B), limit + max(A, B)] 范围 -1</span></span><br><span class="line">            l = <span class="number">1</span> + <span class="built_in">min</span>(A, B), r = limit + <span class="built_in">max</span>(A, B);</span><br><span class="line">            diff[l] += <span class="number">-1</span>, diff[r + <span class="number">1</span>] -= <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// [A + B] 再 -1    </span></span><br><span class="line">            l = A + B, r = A + B;</span><br><span class="line">            diff[l] += <span class="number">-1</span>, diff[r + <span class="number">1</span>] -= <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 依次求和，得到 最终互补的数字和 i 的时候，需要的操作数 sum</span></span><br><span class="line">        <span class="comment">// 取最小值</span></span><br><span class="line">        <span class="type">int</span> res = n, sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>; i &lt;= <span class="number">2</span> * limit; i ++)&#123;</span><br><span class="line">            sum += diff[i];</span><br><span class="line">            <span class="keyword">if</span>(sum &lt; res) res = sum;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-使数组中的所有元素都等于零"><a href="#2-使数组中的所有元素都等于零" class="headerlink" title="2 使数组中的所有元素都等于零"></a>2 使数组中的所有元素都等于零</h4><p>给你一个下标从 0 开始的整数数组 nums 和一个正整数 k 。<br>你可以对数组执行下述操作 任意次 ：<br>从数组中选出长度为 k 的 任一 子数组，并将子数组中每个元素都 减去 1 。<br>如果你可以使数组中的所有元素都等于 0 ，返回  true ；否则，返回 false 。<br>子数组 是数组中的一个非空连续元素序列。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">checkArray</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">diff</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        diff[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;++i)&#123;</span><br><span class="line">            diff[i] = nums[i]-nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(diff[i] == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(diff[i] &lt; <span class="number">0</span> || diff[i] &gt; <span class="number">0</span> &amp;&amp; i + k &gt; n)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="type">int</span> d = diff[i];</span><br><span class="line">            diff[i] -= d;</span><br><span class="line">            diff[i+k] += d;          </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">leecode</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">差分数组</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/24/leecode%E9%9A%8F%E8%AE%B006/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -872,6 +969,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">差分数组</a>
               </li>
             
             <div class="clearfix"></div>
