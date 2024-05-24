@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>leecode随记05 | Hexo</title>
+  <title>Tag: git | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第五天leetcode练习记录">
-<meta property="og:type" content="article">
-<meta property="og:title" content="leecode随记05">
-<meta property="og:url" content="http://example.com/2024/05/18/leecode%E9%9A%8F%E8%AE%B005/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/tags/git/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="第五天leetcode练习记录">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-05-18T08:03:12.000Z">
-<meta property="article:modified_time" content="2024-05-18T08:10:30.069Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="leecode exercise">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -155,190 +150,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-leecode随记05" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      leecode随记05
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2024" class="archive-year">2024</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2024/05/22/git/" class="archive-article-date">
+  	<time datetime="2024-05-22T02:48:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-22</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2024/05/22/git/">git</a>
     </h1>
   
 
-        
-        <a href="/2024/05/18/leecode%E9%9A%8F%E8%AE%B005/" class="archive-article-date">
-  	<time datetime="2024-05-18T08:03:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>第五天leetcode练习记录</code></p>
-<span id="more"></span>
-
-
-<h1 id="第一题-构造有效字符串的最少插入数（mid）"><a href="#第一题-构造有效字符串的最少插入数（mid）" class="headerlink" title="第一题 构造有效字符串的最少插入数（mid）"></a>第一题 构造有效字符串的最少插入数（mid）</h1><p>给你一个字符串 <code>word</code> ，你可以向其中任何位置插入 <code>”a”</code>、<code>&quot;b&quot;</code> 或<code> &quot;c&quot;</code> 任意次，返回使 <code>word </code>有效 需要插入的最少字母数。<br>如果字符串可以由 <code>&quot;abc&quot;</code> 串联多次得到，则认为该字符串 有效 。</p>
-<p><em>代码</em></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">//.   思想大于一切</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int addMinimum(string word) &#123;</span><br><span class="line">        int n = word.size();</span><br><span class="line">        int res=2;</span><br><span class="line">        for(int i=1;i&lt;n;i++)&#123;</span><br><span class="line">            if(word[i]&gt;word[i-1])&#123;</span><br><span class="line">                res --;</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                res += 2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//。  官方动态规划 浪费O(n)的空间</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int addMinimum(string word) &#123;</span><br><span class="line">        int n = word.size();</span><br><span class="line">        vector&lt;int&gt; d(n + 1);</span><br><span class="line">        for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">            d[i] = d[i - 1] + 2;</span><br><span class="line">            if (i &gt; 1 &amp;&amp; word[i - 1] &gt; word[i - 2]) &#123;</span><br><span class="line">                d[i] = d[i - 1] - 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return d[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="第二题-找出可整除性得分最大的整数（easy）"><a href="#第二题-找出可整除性得分最大的整数（easy）" class="headerlink" title="第二题 找出可整除性得分最大的整数（easy）"></a>第二题 找出可整除性得分最大的整数（easy）</h1><p>给你两个下标从 <code>0</code> 开始的整数数组 <code>nums </code>和 <code>divisors </code>。</p>
-<p><code>divisors[i]</code> 的 可整除性得分 等于满足 <code>nums[j]</code> 能被<code>divisors[i]</code>整除的下标 j 的数量。</p>
-<p>返回 可整除性得分 最大的整数 <code>divisors[i]</code> 。如果有多个整数具有最大得分，则返回数值最小的一个。</p>
-<ul>
-<li>死办法。嵌套两次循环，时间复杂度不必多说<code>O(mn)</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxDivScore(vector&lt;int&gt;&amp; nums, vector&lt;int&gt;&amp; divisors) &#123;</span><br><span class="line">        int m = nums.size(),n = divisors.size();</span><br><span class="line">        int index=0,max_div=0;</span><br><span class="line">        for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">            int temp=0;</span><br><span class="line">            for(int j=0;j&lt;m;j++)&#123;</span><br><span class="line">                if(!(nums[j]%divisors[i]))&#123;</span><br><span class="line">                    temp++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if(temp&gt;max_div)&#123;</span><br><span class="line">                max_div = temp;</span><br><span class="line">                index = i;</span><br><span class="line">            &#125;</span><br><span class="line">            else if(temp==max_div)&#123;</span><br><span class="line">                if(divisors[i]&lt;divisors[index])&#123;</span><br><span class="line">                    index = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return divisors[index];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">leecode exercise</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2024/05/18/leecode%E9%9A%8F%E8%AE%B005/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2024/05/19/REDIS/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          REDIS
-        
-      </div>
-    </a>
   
   
-    <a href="/2024/05/15/leecode%E9%9A%8F%E8%AE%B004/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">leecode随记04</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -361,9 +226,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
